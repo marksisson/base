@@ -1,8 +1,11 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 let
+  library = import ../lib inputs.nixpkgs.lib inputs.flake-parts.lib;
+
   module = {
-    flake.lib.modulesIn = directory: lib.filter (n: lib.strings.hasSuffix ".nix" n) (lib.filesystem.listFilesRecursive directory);
-    flake.lib.mkFlake = inputs.flake-parts.lib.mkFlake;
+    flake.lib = {
+      inherit (library) mkFlake modulesIn moduleWithOptionalPartitionedAttr;
+    };
   };
 in
 {
