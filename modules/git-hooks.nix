@@ -1,7 +1,8 @@
+{ lib, ... }:
 let
   module =
     {
-      partitions.development.module = { inputs, ... }: {
+      partitions.development.module = { inputs, options, ... }: {
 
         imports = [ inputs.git-hooks.flakeModule ];
 
@@ -10,7 +11,7 @@ let
             treefmt.enable = true;
             treefmt.package = config.treefmt.build.wrapper;
           };
-
+        } // lib.optionalAttrs (options ? develop) {
           develop.default.packages = with config.pre-commit; settings.enabledPackages;
 
           develop.default.shellHook = ''

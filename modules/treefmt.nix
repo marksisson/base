@@ -1,7 +1,8 @@
+{ lib, ... }:
 let
   module =
     {
-      partitions.development.module = { inputs, ... }: {
+      partitions.development.module = { inputs, options, ... }: {
 
         imports = [ inputs.treefmt.flakeModule ];
 
@@ -14,7 +15,7 @@ let
               shfmt.enable = true;
             };
           };
-
+        } // lib.optionalAttrs (options ? develop) {
           develop.default.packages = with config.treefmt; builtins.attrValues build.programs;
         };
 

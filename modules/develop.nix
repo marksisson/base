@@ -51,5 +51,5 @@ let
 in
 {
   imports = [ module ];
-  flake.modules.flake.default = module;
+  flake.modules.flake.develop = module;
 }

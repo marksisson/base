@@ -1,7 +1,7 @@
 { lib, ... }:
 let
   module =
-    { self, ... }: {
+    { options, self, ... }: {
 
       partitions.development.module = {
 
@@ -24,7 +24,7 @@ let
               done
             '';
           in
-          {
+          { } // lib.optionalAttrs (options ? develop) {
             develop.default.packages = [ justified ];
           };
 
